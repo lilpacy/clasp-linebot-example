@@ -1,0 +1,3 @@
+ACCESS_TOKEN=チャンネル基本設定->メッセージ送受信設定->アクセストークンの値
+TO=チャンネル基本設定->その他->Your user ID
+SHEETS_URL=あなたのスプレッドシートへのURL&range=A
