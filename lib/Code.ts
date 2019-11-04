@@ -80,3 +80,11 @@ export function messagePush() {
 
   return UrlFetchApp.fetch(url, options);
 }
+
+export function doGet() {
+  messagePush();
+}
+
+export function doPost() {
+  messagePush();
+}
