@@ -5,6 +5,9 @@
 ```shell
 npm install -g clasp
 clasp login # -> Login your Google account at first.
+```
+
+```shell
 git clone git@github.com:lilpacy/clasp-linebot-example.git
 cd clasp-linebot-example
 make setup # -> A spreadsheet and binded script will be created.
