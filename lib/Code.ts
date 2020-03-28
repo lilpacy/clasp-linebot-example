@@ -51,6 +51,12 @@ function getJaps() {
   return values;
 }
 
+function write(text) {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = ss.getActiveSheet();
+  sheet.getRange(sheet.getLastRow() + 1, 1, 1, 1).setValue(text);
+}
+
 export function messagePush() {
   var url = "https://api.line.me/v2/bot/message/multicast";
   var headers = {
@@ -85,6 +91,40 @@ export function doGet() {
   messagePush();
 }
 
-export function doPost() {
-  messagePush();
+export function doPost(e) {
+  try {
+    if (e) {
+      var json = JSON.parse(e.postData.contents);
+      var text = json.events[0].message.text;
+    }
+    write(text);
+    pushToLine("書き込みました!");
+  } catch (err) {
+    pushToLine(JSON.stringify(err));
+  }
+}
+
+// Debug
+
+function pushToLine(string) {
+  try {
+    var url = "https://api.line.me/v2/bot/message/multicast";
+    var headers = {
+      "Content-Type": "application/json; charset=UTF-8",
+      Authorization: "Bearer " + accessToken
+    };
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var postData = {
+      to: [to],
+      messages: [textMessage(string)]
+    };
+    var options = {
+      method: "post",
+      headers: headers,
+      payload: JSON.stringify(postData)
+    };
+    UrlFetchApp.fetch(url, options);
+  } catch (err) {
+    console.error(err);
+  }
 }
